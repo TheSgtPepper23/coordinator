@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/TheSgtPepper23/coordinator/models"
 	_ "modernc.org/sqlite"
@@ -28,8 +27,12 @@ func main() {
 		panic(err)
 	}
 
-	for _, x := range maps {
-		fmt.Println(x.Name)
+	map2 := maps[0]
+
+	map2.DeleteMap()
+
+	if err != nil {
+		panic(err)
 	}
 }
 
