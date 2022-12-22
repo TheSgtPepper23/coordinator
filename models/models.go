@@ -10,8 +10,13 @@ var db *sql.DB
 
 const dbTimeout = time.Second * 3
 
-func New(dbPool *sql.DB) {
+func New(dbPool *sql.DB) Models {
 	db = dbPool
+
+	return Models{
+		Map:        Map{},
+		Coordinate: Coordinate{},
+	}
 }
 
 type Models struct {
@@ -20,19 +25,19 @@ type Models struct {
 }
 
 type Map struct {
-	ID           int64
-	Name         string
-	CreationDate time.Time
-	Version      string
-	Coordinates  []*Coordinate
+	ID           int64         `json:"id,omitempty"`
+	Name         string        `json:"name" binding:"required"`
+	CreationDate time.Time     `json:"creationDate"`
+	Version      string        `json:"version" binding:"required"`
+	Coordinates  []*Coordinate `json:"coordinates,omitempty"`
 }
 
 type Coordinate struct {
-	ID     int64
-	Name   string
-	XValue float64
-	YValue float64
-	ZValue float64
+	ID     int64   `json:"id,omitempty"`
+	Name   string  `json:"name" binding:"required"`
+	XValue float64 `json:"xvalue" binding:"required"`
+	YValue float64 `json:"yvalue" binding:"required"`
+	ZValue float64 `json:"zvalue" binding:"required"`
 }
 
 // Creates a new map and stores it in the database Returns the inserted ID or an error
